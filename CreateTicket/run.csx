@@ -13,7 +13,7 @@ using CamundaClient;
 using CamundaClient.Dto;
 
 
-public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log)
+public static HttpResponseMessage Run(HttpRequestMessage req, out string outputEventHubMessage, TraceWriter log)
 {
 
     var camunda = new CamundaEngineClient(
@@ -31,8 +31,10 @@ public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceW
 
     string processInstanceId = camunda.BpmnWorkflowService.StartProcessInstance("ticket", new Dictionary<string, object>()
                     {
-                        {"someBookingData", "..." }
+                        {"payload", "{}" }
                     });
+
+    outputEventHubMessage = "started: " + processInstanceId;
 
     return req.CreateResponse(HttpStatusCode.OK, "Started " + processInstanceId);
 }

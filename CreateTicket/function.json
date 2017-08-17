@@ -11,6 +11,13 @@
       "name": "$return",
       "type": "http",
       "direction": "out"
+    },
+    {
+      "type": "eventHub",
+      "name": "outputEventHubMessage",
+      "path": "outeventhub",
+      "connection": "camundaEvents_RootManageSharedAccessKey_EVENTHUB",
+      "direction": "out"
     }
   ]
 }

@@ -1,0 +1,14 @@
+{
+  "bindings": [
+    {
+      "type": "eventHubTrigger",
+      "name": "myEventHubMessage",
+      "path": "myeventhub",
+      "consumerGroup": "$Default",
+      "connection": "camundaEvents_RootManageSharedAccessKey_EVENTHUB",
+      "cardinality": "many",
+      "direction": "in"
+    }
+  ],
+  "disabled": false
+}
