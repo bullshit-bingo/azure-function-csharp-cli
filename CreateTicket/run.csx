@@ -16,16 +16,18 @@ using CamundaClient.Dto;
 public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log, ExecutionContext context)
 {
 
-    camunda = new CamundaEngineClient(
+    var camunda = new CamundaEngineClient(
         new System.Uri("http://13.93.92.185:8080/engine-rest/engine/default/"), 
         null, 
         null);
 
+    /*
     
     var model = Path.Combine(context.FunctionDirectory, "");
     var fileParam = new FileParameter(File.ReadAllBytes(model), "ticket.bpmn");
 
     camunda.RepositoryService.Deploy("ticket", new List<object> { fileParam });
+    */
 
     string processInstanceId = camunda.BpmnWorkflowService.StartProcessInstance("ticket", new Dictionary<string, object>()
                     {
