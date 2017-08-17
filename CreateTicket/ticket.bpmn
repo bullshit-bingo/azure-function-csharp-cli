@@ -13,6 +13,18 @@
       <bpmn:incoming>SequenceFlow_10lved8</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_10lved8" sourceRef="Task_0ggj2sy" targetRef="EndEvent_05hnbm9" />
+    <bpmn:task id="Task_17blegd" name="Reserve seat">
+      <bpmn:outgoing>SequenceFlow_1a9smgh</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_0rpxn0r" name="Retrieve payment">
+      <bpmn:incoming>SequenceFlow_1a9smgh</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0dasski</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="SequenceFlow_1a9smgh" sourceRef="Task_17blegd" targetRef="Task_0rpxn0r" />
+    <bpmn:task id="Task_16sez9o" name="Create ticket PDF">
+      <bpmn:incoming>SequenceFlow_0dasski</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="SequenceFlow_0dasski" sourceRef="Task_0rpxn0r" targetRef="Task_16sez9o" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ticket">
@@ -40,6 +52,31 @@
         <di:waypoint xsi:type="dc:Point" x="420" y="120" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="400" y="99" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_17blegd_di" bpmnElement="Task_17blegd">
+        <dc:Bounds x="280" y="238" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0rpxn0r_di" bpmnElement="Task_0rpxn0r">
+        <dc:Bounds x="450" y="238" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1a9smgh_di" bpmnElement="SequenceFlow_1a9smgh">
+        <di:waypoint xsi:type="dc:Point" x="380" y="278" />
+        <di:waypoint xsi:type="dc:Point" x="415" y="278" />
+        <di:waypoint xsi:type="dc:Point" x="415" y="278" />
+        <di:waypoint xsi:type="dc:Point" x="450" y="278" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="430" y="272" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_16sez9o_di" bpmnElement="Task_16sez9o">
+        <dc:Bounds x="612" y="238" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0dasski_di" bpmnElement="SequenceFlow_0dasski">
+        <di:waypoint xsi:type="dc:Point" x="550" y="278" />
+        <di:waypoint xsi:type="dc:Point" x="612" y="278" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="581" y="257" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
