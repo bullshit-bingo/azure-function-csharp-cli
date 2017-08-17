@@ -12,11 +12,7 @@ using System.Threading.Tasks;
 using CamundaClient;
 using CamundaClient.Dto;
 
-public static void Run(string myQueueItem, TraceWriter log)
-{
-    log.Info($"C# ServiceBus queue trigger function processed message: {myQueueItem}");
-    pollForTasks(log);
-}
+
 
 public static void Run(TimerInfo myTimer, TraceWriter log)
 {
@@ -28,7 +24,7 @@ public static void Run(TimerInfo myTimer, TraceWriter log)
     pollForTasks(log);
 }
 
-public static void doTheWork(String payload, TraceWriter log)
+public static void doTheWork(Variable payload, TraceWriter log)
 {
     log.Info("YEAH - got a todo with payload " + payload);
 }
@@ -46,13 +42,23 @@ public static void pollForTasks(TraceWriter log)
 {
 
     var camunda = new CamundaEngineClient(
-        new System.Uri("http://13.93.92.185:8080/engine-rest/engine/default/"), 
-        null, 
+        new System.Uri("http://13.93.92.185:8080/engine-rest/engine/default/"),
+        null,
         null);
 
     var tasks = camunda.ExternalTaskService.FetchAndLockTasks(workerId, pollingNumberOfTasks, topic, pollingLockTimeInMs, new List<string>() { "payload" });
-    tasks.ForEach((externalTask) => {
-            doTheWork(externalTask.Variables["payload"], log);
-            camunda.ExternalTaskService.Complete(workerId, externalTask.Id);
-        });    
+
+    log.Info($"Polled tasks: {tasks.Count}");
+
+    foreach (var externalTask in tasks)
+    {
+        log.Info($"Execute task: {externalTask}");
+        Variable payload = null;
+        if (externalTask.Variables.ContainsKey("payload"))
+        {
+            payload = externalTask.Variables["payload"];
+        }
+        doTheWork(payload, log);
+        camunda.ExternalTaskService.Complete(workerId, externalTask.Id);
+    }
 }
