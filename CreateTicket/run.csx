@@ -13,7 +13,7 @@ using CamundaClient;
 using CamundaClient.Dto;
 
 
-public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log, ExecutionContext context)
+public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log)
 {
 
     var camunda = new CamundaEngineClient(
