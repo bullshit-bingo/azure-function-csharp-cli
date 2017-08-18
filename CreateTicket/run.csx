@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Configuration;
 
 using CamundaClient;
 using CamundaClient.Dto;
@@ -15,19 +16,11 @@ using CamundaClient.Dto;
 
 public static HttpResponseMessage Run(HttpRequestMessage req, out string outputEventHubMessage, TraceWriter log)
 {
-
+    log.Info("Start workflow on camunda instance at: "  + ConfigurationManager.AppSettings["camundaEndpoint"] + "engine/default/");
     var camunda = new CamundaEngineClient(
-        new System.Uri("http://13.93.92.185:8080/engine-rest/engine/default/"), 
+        new System.Uri(ConfigurationManager.AppSettings["camundaEndpoint"] + "/engine/default/"), 
         null, 
         null);
-
-    /*
-    
-    var model = Path.Combine(context.FunctionDirectory, "");
-    var fileParam = new FileParameter(File.ReadAllBytes(model), "ticket.bpmn");
-
-    camunda.RepositoryService.Deploy("ticket", new List<object> { fileParam });
-    */
 
     string processInstanceId = camunda.BpmnWorkflowService.StartProcessInstance("ticket", new Dictionary<string, object>()
                     {
